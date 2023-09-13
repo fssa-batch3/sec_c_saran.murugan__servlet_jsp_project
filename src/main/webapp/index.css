@@ -1,5 +1,3 @@
-@charset "ISO-8859-1";
-
 @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
 
 main {
@@ -40,7 +38,7 @@ header img {
 header input {
     padding-left: 50px;
     height: 50px;
-    background-image: url(https://i.ibb.co/8mPgXy8/search.png);
+    background-image: url(../images/logo/search.png);
     background-size: 40px;
     background-repeat: no-repeat;
     width: 35%;
@@ -584,117 +582,6 @@ details div {
     margin-left: 40px;
     margin-top: 45px;
     color: white;
-
-}
-
-
-.movie-list-container{
-    padding: 0 20px;
-    width: 82%;
-    margin-left: 120px;
-}
-
-.movie-list-container2 {
-    padding: 0 20px;
-    width: 85%;
-    margin-left: 115px;
-}
-
-.movie-list-container3 {
-    padding: 0 20px;
-    margin-left: 40px;
-    width: 100%;
-}
-
-.movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 1300px;
-    height: 900px;
-    margin-top: 40px;
-    transform: translateX(0);
-    transition: all 1s ease-in-out;
-
-}
-
-.movie-list-wrapper {
-    gap: 10px;
-    /* position: relative;
-    overflow: hidden; */
-}
-
-.movie-list-item {
-    margin-right: 30px;
-    position: relative;
-
-}
-
-.movie-list-item:hover .movie-list-item-img {
-    transform: scale(1.2);
-    margin: 0 20px;
-    opacity: 0.5;
-}
-
-.movie-list-item:hover .movie-list-item-title,
-.movie-list-item:hover .movie-list-item-desc,
-.movie-list-item:hover .movie-list-item-button {
-    opacity: 1;
-}
-
-.movie-list-item-img {
-    width: 270px;
-    border-radius: 20px;
-    height: 420px;
-    object-fit: cover;
-    transition: all 1s ease-in-out;
-
-}
-
-.movie-list-item-title {
-    background-color: #ffffff1A;
-    color: white;
-    padding: 0 10px;
-    font-size: 27px;
-    font-weight: bold;
-    position: absolute;
-    top: 30%;
-    left: 50px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
-}
-
-.movie-list-item-desc {
-    background-color: #ffffff1A;
-    color: white;
-    padding: 10px;
-    font-size: 14px;
-    position: absolute;
-    top: 45%;
-    left: 50px;
-    width: 230px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
-}
-
-.movie-list-item-button {
-    background-color: #edde3b;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    bottom: 70px;
-    left: 50px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
-}
-
-.movie-list-item-button a {
-    text-decoration: none;
-    color: black;
 
 }
 

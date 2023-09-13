@@ -56,21 +56,20 @@ public class AddMovieServlet extends HttpServlet {
 
 	        try {
 	            // Call the createMovie method from your DAO
-	            boolean success = MovieDAO.createMovie(movie);
-
-	            if (success) {
-	                // Redirect to a success page or display a success message
+	            boolean success = MovieService.addMovie(movie);
+	            if (success){
+	                // Redirect to a home page 
 	                response.sendRedirect("MovieServlet");
 	            } else {
 	                // Redirect to an error page or display an error message
 	                response.sendRedirect("addmovie.jsp");
 	            }
-	        } catch (DAOExceptions e) {
-	            // Handle any DAOExceptions (custom exception for DAO errors)
-	            e.printStackTrace();
-	            // Redirect to an error page or display an error message
-	            response.sendRedirect("addmovie.jsp");
 	        }
+	            catch (MovieValidateException | DAOExceptions e) {
+					e.printStackTrace();
+				}
+
+	            
 	    }
 	    
 	    @Override

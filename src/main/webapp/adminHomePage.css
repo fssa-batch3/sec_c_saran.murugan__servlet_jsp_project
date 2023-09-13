@@ -120,39 +120,27 @@ body {
     color: #edde3b;
 }
 
-.main {
-    background-color: black;
-}
-
-.movie_details_section {
-    background-color:black;
-    width: 50%;
-    margin-left: 20%;
-}
-#movie_details-form{
+.show-button {
     display: flex;
-    flex-wrap: wrap;
-
-}
-.movie_details_section h1 {
-    margin-left: 30%;
+    margin-left: 40px;
 }
 
-.movie_wrapper {
-    margin-left: 25%;
+.show-button button {
+    margin-top: 40px;
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+    color: black;
+    margin-left: 20px;
+    background-color: #edde3b;
+    border-radius: 10px;
+    padding: 10px;
 }
 
-label {
-    padding-right: 10%;
-}
+.show-button h2 {
+    font-size: 25px;
+    margin-left: 40px;
+    margin-top: 45px;
+    color: white;
 
-.theatre-details-section {
-    background-color: #ffffff;
-    width: 50%;
-    margin-left: 20%;
-    margin-top: 10px;
-}
-
-.theatre-details-section h1 {
-    margin-left: 30%;
 }
