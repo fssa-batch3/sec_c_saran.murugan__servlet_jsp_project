@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: black;
+
+}
+html{
+    font-family: 'Barlow', sans-serif;  
+}
+header {
+    background-color: #edde3b;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+}
+
+header img {
+    width: 110px;
+    margin-bottom: 20px;
+    bottom: 20px;
+    height: 110px;
+    margin-left: 70px;
+}
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-left: 30px;
+    padding-bottom: 20px;
+}
+
+.banner h1 {
+    color: #edde3b;
+    font-size: 50px;
+}
+
+.banner h3 {
+    color: white;
+    font-size: 30px;
+}
+
+.banner h4 {
+    color: white;
+    font-size: 25px;
+}
+.timeandcast  h4{
+    color:white;
+    text-decoration: none;
+}
+
+.timeandcast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.main {
+    background-color: black;
+    height: 100%;
+    padding-top: px;
+}
+
+.show_date {
+    background-color:black;
+    display: flex;
+    margin-left: 25%;
+}
+
+.sunday_show {
+    padding: 30px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.sunday_show:hover {
+    background-color: #202020;
+}
+.a_day{
+    color: black;
+    text-decoration: none;
+}
+.a_day:focus {
+    background-color:  #333333;
+}
+
+.sunday_show h2 {
+    color: white;
+}
+
+
+.theatre_show1 {
+    padding-top: 20px;
+}
+.theatre_show2 {
+    padding-top: 20px;
+}
+.theatre_show3 {
+    padding-top: 20px;
+}
+.theatre_show4 {
+    padding-top: 20px;
+}
+.theatre_show5 {
+    padding-top: 20px;
+}
+.theatre_show6 {
+    padding-top: 20px;
+}
+.theatre_show7 {
+    padding-top: 20px;
+}
+#day1_shows{
+    display:block;
+}
+#day2_shows{
+    display: none;
+}
+#day3_shows{
+    display: none;
+}
+#day4_shows{
+    display: none;
+}
+#day5_shows{
+    display: none;
+}
+#day6_shows{
+    display: none;
+}
+#day7_shows{
+    display: none;
+}
+.show_times{
+    background-color: black;
+}
+.theatre_name{
+    color: white;
+    margin-left: 50px;
+}
+#theatre_showtime{
+    display: flex;
+    gap: 20px;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+#theatre_showtime a,p{
+    text-decoration: none;
+    color: #edd605;
+    background-color: rgba(21, 19, 10, 255);
+    border: 1px solid rgba(21, 19, 10, 255);
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+hr  {
+    border: 1px solid white;
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 40px;
+}
+ 

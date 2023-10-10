@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+*{
+    
+    margin: 0px;
+}
+body{
+    background-color:black;
+    font-family: 'Barlow', sans-serif;  
+}
+header{
+    background-color:#edd605;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    
+}
+header h1{
+    font-size: 40px;
+    margin-left: 410px;
+
+}
+
+header img{
+    width: 120px;
+    margin-bottom:20px;
+    bottom: 20px;
+    height: 130px;
+}
+.all{
+    display: flex;
+}
+.main{
+    background-color:#333333;
+    width: 50%;
+    height: 690px;
+    border-radius: 10px;
+    margin-left: 25%;
+    margin-top: 40px;
+    padding-top: 70px;
+}
+.showtime {
+    display: flex;
+    justify-content:space-evenly;
+}
+.showtime img{
+    width:180px;
+    border-radius: 10px;
+}
+.showname{
+    color: white;
+    font-size: 30px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+hr{
+    color:white solid;
+    width:450px;
+}
+.qrcode{
+    display: flex;
+}
+.qrcode img{
+    width:200px;
+    margin-left: 30px;
+    margin-top: 70px;
+}
+.main2{
+    display: flex;
+}
+a button{
+    background-color:#edd605;
+    border-color: black;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+   margin-top: 730px;
+   margin-left: 20px;
+}
+/* .showtime{
+    background-color:white;
+    width:50%;
+    height: 500px;
+    margin-left: 25%8
+} */
+#seat_names_div{
+    font-size: 26px;
+    margin-left: 100px;
+    margin-top:10px ;
+    width:300px;
+    color: white;
+}
+#booking_id_div{
+    font-size: 30px;
+    margin-left: 90px;
+    margin-top: 20px;
+    color: white;
+}
+.seat_cab_total{
+    font-size: 30px;
+    color: white;
+    margin-top: 140px;
+    margin-left: 130px;
+}
+#seat_count{
+    margin-left: 10px;
+}
+#booking-history-button{
+
+    background-color: #edd605;
+    color: black;
+    width:100px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 53%;
+}

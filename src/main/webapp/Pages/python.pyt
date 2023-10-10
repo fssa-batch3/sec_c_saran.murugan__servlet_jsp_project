@@ -1,0 +1,3 @@
+ s= "saran"
+
+print(s)

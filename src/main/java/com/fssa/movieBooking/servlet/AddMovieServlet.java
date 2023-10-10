@@ -33,9 +33,7 @@ public class AddMovieServlet extends HttpServlet {
 	        String formatStr = request.getParameter("format");
 	        String certificateStr = request.getParameter("certificate");
 	        String genreStr = request.getParameter("genre");
-	        int durationHours = Integer.parseInt(request.getParameter("durationHours"));
 	        int durationMinutes = Integer.parseInt(request.getParameter("durationMinutes"));
-	        int durationSeconds = Integer.parseInt(request.getParameter("durationSeconds"));
 	        String description = request.getParameter("description");
 	        LocalDate releaseDate = LocalDate.parse(request.getParameter("releaseDate"));
 	        String movieImage = request.getParameter("movieImage");
@@ -51,7 +49,7 @@ public class AddMovieServlet extends HttpServlet {
 
 	        // Create a Movie object
 	        Movie movie = new Movie(movieName, language, format, certificate, genre,
-	                durationHours, durationMinutes, durationSeconds, description, releaseDate,
+	                durationMinutes ,description, releaseDate,
 	                movieImage, movieBanner, status);
 
 	        try {

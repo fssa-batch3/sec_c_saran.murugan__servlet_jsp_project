@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="com.fssa.movie.model.Movie"%>
+<%@ page import="com.fssa.movie.model.User"%>
+
 <%@ page import="com.fssa.movie.model.MovieStatus"%>
+<%@ page import="com.fssa.movie.service.*"%>
+
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,118 +20,125 @@
 <title>Lets show website</title>
 <style>
 
-.movie-list-container1 {
-    padding: 0 20px;
-    width: 82%;
-    margin-left: 120px;
+
+header a #log-in-button {
+    padding: 20px;
+    padding-bottom: 30px;
+    width: 90px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    margin-right: 40px;
+    margin-top: 13px;    
+    display: inline;
 }
 
-
+.movie-list-container1 {
+	padding: 0 20px;
+	width: 82%;
+	margin-left: 120px;
+}
 
 .movie-list-container2 {
-    padding: 0 20px;
-    width: 85%;
-    margin-left: 115px;
+	padding: 0 20px;
+	width: 85%;
+	margin-left: 115px;
 }
 
 .movie-list-container3 {
-    padding: 0 20px;
-    margin-left: 40px;
-    width: 100%;
+	padding: 0 20px;
+	margin-left: 40px;
+	width: 100%;
 }
 
 .movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 1300px;
-    height: 900px;
-    margin-top: 40px;
-    transform: translateX(0);
-    transition: all 1s ease-in-out;
-
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 1300px;
+	height: 500px;
+	margin-top: 40px;
+	transform: translateX(0);
+	transition: all 1s ease-in-out;
 }
 
 .movie-list-wrapper {
-    gap: 10px;
-    /* position: relative;
+	gap: 10px;
+	/* position: relative;
     overflow: hidden; */
 }
 
 .movie-list-item {
-    margin-right: 30px;
-    position: relative;
-
+	margin-right: 30px;
+	position: relative;
 }
 
 .movie-list-item:hover .movie-list-item-img {
-    transform: scale(1.2);
-    margin: 0 20px;
-    opacity: 0.5;
+	transform: scale(1.2);
+	margin: 0 20px;
+	opacity: 0.5;
 }
 
-.movie-list-item:hover .movie-list-item-title,
-.movie-list-item:hover .movie-list-item-desc,
-.movie-list-item:hover .movie-list-item-button {
-    opacity: 1;
+.movie-list-item:hover .movie-list-item-title, .movie-list-item:hover .movie-list-item-desc,
+	.movie-list-item:hover .movie-list-item-button {
+	opacity: 1;
 }
 
 .movie-list-item-img {
-    width: 270px;
-    border-radius: 20px;
-    height: 420px;
-    object-fit: cover;
-    transition: all 1s ease-in-out;
-
+	width: 270px;
+	border-radius: 20px;
+	height: 420px;
+	object-fit: cover;
+	transition: all 1s ease-in-out;
 }
 
 .movie-list-item-title {
-    background-color: #ffffff1A;
-    color: white;
-    padding: 0 10px;
-    font-size: 27px;
-    font-weight: bold;
-    position: absolute;
-    top: 30%;
-    left: 50px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
+	background-color: #ffffff1A;
+	color: white;
+	padding: 0 10px;
+	font-size: 27px;
+	font-weight: bold;
+	position: absolute;
+	top: 30%;
+	left: 50px;
+	opacity: 0;
+	transition: 1s all ease-in-out;
 }
 
 .movie-list-item-desc {
-    background-color: #ffffff1A;
-    color: white;
-    padding: 10px;
-    font-size: 14px;
-    position: absolute;
-    top: 45%;
-    left: 50px;
-    width: 230px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
+	background-color: #ffffff1A;
+	color: white;
+	padding: 10px;
+	font-size: 14px;
+	position: absolute;
+	top: 45%;
+	left: 50px;
+	width: 230px;
+	opacity: 0;
+	transition: 1s all ease-in-out;
 }
 
 .movie-list-item-button {
-    background-color: #edde3b;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    bottom: 70px;
-    left: 50px;
-    opacity: 0;
-    transition: 1s all ease-in-out;
+	background-color: #edde3b;
+	color: white;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	bottom: 70px;
+	left: 50px;
+	opacity: 0;
+	transition: 1s all ease-in-out;
 }
 
 .movie-list-item-button a {
-    text-decoration: none;
-    color: black;
-
+	text-decoration: none;
+	color: black;
 }
-
 </style>
 </head>
 
@@ -138,39 +149,51 @@
 		<div class="all-content">
 			<header>
 
-				<img src="https://i.ibb.co/LPg6ns5/logo.png" alt="logo5">
+				<img src="https://i.ibb.co/LPg6ns5/logo.png" alt="logo5"> <input
+					type="search" id="search" placeholder="Search your movie">
 
-				
-					<input  type="search" id="search"
-						placeholder="Search your movie">
-			
 
 
 				<p style="font-size: 18px;">Chennai</p>
 
-				<div class="buttons">
-					<a href="Pages/log.html">
+				<%
+						boolean loggedIn = false;
+						User user = (User) request.getSession(false).getAttribute("currentUser");
+						if (user == null) {
+						%>
+						<div class="buttons">
+					<a href="Pages/log.jsp">
 						<button id="log-in-button">Log in</button>
 					</a> <br>
-
-
-				</div>
-
-
-				<button class="burger" onclick="toggleMenu()"></button>
-
-
-				<div class="background"></div>
-				<div class="menu">
-
-					<nav class="profile-a">
 						
-               <a id="a-menu" href="#">Admin</a>
-               <a id="a-menu">Cinemas</a> 
-               <a id="a-menu">About us </a> <a id="a-menu">Help and support</a>
-					</nav>
-				</div>
+				  <%
+						}
+						%>
 
+					<button class="burger" onclick="toggleMenu()"></button>
+
+
+					<div class="background"></div>
+					<div class="menu">
+
+						<nav class="profile-a">
+							<%
+						User user2 = (User) request.getSession(false).getAttribute("currentUser");
+						if (user2 != null) {
+							//loggedIn = true;
+						%>
+						
+						<a id="a-menu" href="./Pages/profile.jsp">Profile</a>
+						<%
+							}
+						%>
+						<a id="a-menu" href="./Pages/cinema_page.jsp">Cinemas</a>
+                       <a id="a-menu">About us </a>
+                       <a id="a-menu">Help and support</a>
+							
+						</nav>
+
+					</div>
 			</header>
 
 			<!--  -->
@@ -235,7 +258,9 @@
 								alt="<%=ans.getMovieName()%>"> <span
 								class="movie-list-item-title"><%=ans.getMovieName()%></span>
 							<p class="movie-list-item-desc"><%=ans.getDescription()%></p>
-							<button class="movie-list-item-button">Book now</button>
+							<button class="movie-list-item-button"
+								onclick="location.href='Pages/movie_details.jsp?movie_id=<%=MovieService.getMovieIdByName(ans.getMovieName())%>'">
+								Book now</button>
 						</div>
 						<%
 						}
@@ -243,8 +268,7 @@
 						%>
 					</div>
 					<%
-					}
-					else {
+					} else {
 					%>
 
 					<h1>empty</h1>
@@ -274,7 +298,7 @@
 								alt="<%=ans.getMovieName()%>"> <span
 								class="movie-list-item-title2"><%=ans.getMovieName()%></span>
 							<p class="movie-list-item-desc2"><%=ans.getDescription()%></p>
-							<button class="movie-list-item-button2">Book now</button>
+							<button class="movie-list-item-button2">See more</button>
 						</div>
 						<%
 						}

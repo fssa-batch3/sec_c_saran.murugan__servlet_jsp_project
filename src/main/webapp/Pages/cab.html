@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cab-Booking</title>
+    <link rel="stylesheet" href="../Assets/css/cab.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <h3 style="color: white; font-size: 30px; margin-left: 20px;">LETS <span style="color: #edde3b;">RIDE</span>
+        </h3>
+    </header>
+
+    <div class="main">
+
+
+        <h2 id="head-title">Lets Ride</h2>
+        <div class="cab-details-div">
+
+
+            <div class="pickup" style="display: flex; flex-direction: column;margin-top: 10px;font-size: 20px; ">
+                <label>Pick- Up</label>
+                <input type="text" id="location" required class="det-input" placeholder="Enter Adress">
+            </div>
+
+            <div class="number-div" style="display: flex; flex-direction: column;margin-top: 10px; font-size: 20px;">
+                <label>Contact number</label>
+                <input type="number" id="number" required placeholder="Enter number" class="det-input">
+            </div>
+
+            <div class="destination" style="display: flex; flex-direction: column;margin-top: 10px;font-size: 20px; ">
+                <label>Destination</label>
+                <p id="theatre_name" class="det-input"></p>
+            </div>
+
+
+
+        </div>
+
+        <button id="search_cab"> SEARCH <span id="cab_button_text">CAB</span><i
+                class="fa-solid fa-arrow-right arrow"></i></button>
+
+
+
+        <div class="cab-price" style="display: none;">
+
+            <div class="cab-price-div">
+                <img src="https://i.ibb.co/WtG6cbp/ola-car.png" alt="image">
+
+                <div class="profile">
+
+                    <h3 id="email_text">Your E-mail :<span id="email"></span></h3>
+                    <h3 class="cab-total">Total cost -<span id="cab-money"></span></h3>
+                    <div class="confirm_button_div">
+                    <p id="cab_name" style="display: none;">cab</p>
+                    
+                    </div>
+                    <!-- <button id="confirm_button">Confirm & Book</button> -->
+                </div>
+            </div>
+
+        </div>
+</body>
+
+<script>
+
+    const movie_list = JSON.parse(localStorage.getItem("show_movie_details"));
+
+    const url = window.location.search;                // ?name=Arun
+    const urlParams = new URLSearchParams(url);    //"name":"ponniyinselvan"    // converting string into key value pair
+    const username = urlParams.get("name")             // return value of the "name" key
+    console.log(username);
+
+    let res;
+    movie_list.find((e) => {
+        if (e.name.movie_name == username) { //arr[0],arr[1]  =e
+            return res = e;
+        }
+
+        return res = 0;
+
+    });
+
+    const users = JSON.parse(localStorage.getItem("profile_details"));
+
+    const email = document.getElementById("email");
+    email.innerText = users.email;
+
+    const users_booking = JSON.parse(localStorage.getItem("user_booking"));
+
+    const theater_name = document.getElementById("theatre_name");
+    theater_name.innerText = users_booking[0].theatre_name;
+
+    // let show_time = document.getElementById("show_time");
+    // show_time.innerText = users_booking[0]["show_time"];
+
+    let search_cab = document.getElementById("search_cab");
+    let cab_price_div = document.querySelector(".cab-price");
+
+    search_cab.addEventListener("click", function () {
+
+        cab_price_div.style.display = "block";
+        search_cab.style.display = "none";
+
+
+    })
+
+
+
+    function generateRandomMoney(min, max) {
+        // Generate a random decimal between 0 and 1
+        const randomDecimal = Math.random();
+
+        // Generate a random amount within the specified range
+        const randomMoney = randomDecimal * (min) + min;
+
+        // Round the value to two decimal places
+        const roundedMoney = Math.round(randomMoney * 100) / 100;
+
+        return roundedMoney;
+    }
+
+
+    const randomAmount = generateRandomMoney(200, 300); 
+    
+
+
+    let cab_money = document.getElementById("cab-money");
+    cab_money.innerText = randomAmount;
+    console.log(cab_money.innerText);
+
+    let user_location = document.getElementById("location")
+    let user_number = document.getElementById("number")
+
+
+    console.log(user_location);
+
+    let confirm_button_div = document.querySelector(".confirm_button_div");
+
+    let confirm_button = document.createElement("button");
+    confirm_button.setAttribute("id", "confirm_button");
+    
+    confirm_button_div.append(confirm_button);
+
+    let confirm_a = document.createElement("a");
+    confirm_a.setAttribute("class", "confirm_button_a")
+    confirm_a.innerText = "confirm & book";
+    confirm_a.setAttribute("href", `movie_payment_page.html?name=${res.name.movie_name}`);
+    confirm_button.append(confirm_a);
+
+
+  let cab_name=document.getElementById("cab_name");
+
+  
+      confirm_button.addEventListener("click", function () {
+
+
+        const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+        if (JSON.parse(localStorage.getItem("user_booking"))) {
+            user_booking.find(e => {
+                if (e.email == users.email) {
+                    e.email = users.email
+                    e.user_location = user_location.value
+                    e.user_number = user_number.value
+                    e.cab_money = cab_money.innerText
+                    e.cab_name=cab_name.innerText
+                    localStorage.setItem("user_booking", JSON.stringify(user_booking))
+
+                }
+                else {
+                    const booking_data = {
+                        "email": users.booking,
+                        "show_day": day,
+                        "show_date": date,
+                        "show_month": month,
+                        "cab_name":cab_name.innerText,
+                        "theatre_name": theatre_name,
+                        "seat_names": selectedSeats,
+                        "booking_id": randomString,
+                        "cab_money": cab_money.innerText,
+                        "user_location": user_location.value,
+                        "user_number": user_number.value,
+                        // "seat_count":selectseatcount,
+                        "seat_price": total.innerText,
+                        "show_time": show_time,
+                    }
+                    user_booking.push(booking_data)
+
+                    // users.push(booking_data)
+
+                    localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                }
+            })
+        }
+
+    })
+
+
+
+
+</script>
+
+</html>

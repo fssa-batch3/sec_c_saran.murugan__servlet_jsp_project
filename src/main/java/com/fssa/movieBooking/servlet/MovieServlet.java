@@ -1,6 +1,7 @@
 package com.fssa.movieBooking.servlet;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +40,7 @@ public class MovieServlet extends HttpServlet {
 		    try {
 		        List<Movie> movieList =  MovieService.readMovies();
 		         request.setAttribute("movieList", movieList);
-		        
+		         
 		        }
 		    catch (SQLException  e) {
 		       

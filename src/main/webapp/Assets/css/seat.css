@@ -1,0 +1,269 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+*{
+    padding: 0px;
+    margin: 0px;
+}
+html{
+    font-family: 'Barlow', sans-serif;  
+}
+body{
+    background-color: black;
+}
+.banner{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.banner h1{
+    color:#edd605;
+}
+.screen{
+    display: flex;
+    align-items: center;
+    margin-left: 40%;
+    margin-top: 20px;
+}
+.screen h3{
+    font-family: 'Barlow', sans-serif;  
+}
+#screen-arrow-logo{
+    width:30px;
+    margin-left: 40px;
+}
+/* .screen img{
+    width:30px;
+    margin-left: ;
+} */
+.show-case{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.seat_disclaimer{
+   display: flex;
+   margin-left: 37%;
+   gap:20px;
+}
+.seat-prime{
+    background-color:  #fff;
+    height: 28px;
+    width: 35px;
+    margin-top: 15px;
+    margin: 3px;
+    text-align: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+
+}
+/* .selected h5{
+    color:white;
+    text-align: center;
+    font-family: 'Puritan', sans-serif;
+    align-items: center;
+} */
+.seat-prime.selected {
+    background-color:#edd605;
+    
+}
+
+.seatcost-budget{
+    color:white;
+    font-size: 12px;
+    margin-top: 40px;
+    margin-left: 45%;
+}
+/* .seat-budget{
+    background-color: #444451;
+    height: 22px;
+    width: 25px;
+    margin: 3px;
+    border-top-left-radius: 10px;
+    margin-top: 15px;
+    border-top-right-radius: 10px;
+} */
+
+/* #seat-prime-row1{
+    display: flex;
+    margin-left: 35%;
+}
+.seatprime-row2{
+    display: flex;
+    margin-left: 28%;
+}
+.seatcost-prime{
+    color:white;
+    font-size: 12px;
+    margin-top: 20px;
+    margin-left: 48%;
+}
+.seat-prime:nth-of-type(2){
+    margin-right: 18px;
+}
+.seat-prime:nth-last-of-type(3){
+    margin-right: 18px;
+}
+.seat-prime:not(.occupied):hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+/* .showcase .seat-prime:not(.occupied):hover{
+    cursor: pointer;
+    transform: scale(1 );
+} */
+/* .occupied{
+    background-color:  #444451 ;
+    height: 28px;
+    width: 35px;
+    margin-top: 15px;
+    margin: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+   
+}
+*/
+ .total_seatandcost{
+  background-color: #ffffff;
+    width: 80%;
+    height: 80px;
+    margin-top: 40px;
+    margin-left: 10%;
+}
+h3{
+    color: white;
+    margin-right:20px ;
+}
+.total_seatandcost{
+    display: flex;
+    justify-content: space-between;
+}
+.seat_total{
+    display: flex;
+}
+.seat_info{
+    display: flex;
+    flex-direction: column;
+}
+.seat_total h3{
+    font-size: 20px;
+    margin-left: 40px;
+    margin-top: 15px;
+    color: black;
+} 
+.seat_total span{
+    font-size: 25px;
+    padding:  5px 8px;
+    color: white;
+    border: 1px #bd4747 solid;
+    background-color: #bd4747;
+    width: 35px;
+    border-radius: 10px;
+    text-align: center;
+    height: 35px;
+    margin-top: 8px;
+}
+.cost_total{
+    display: flex;
+    background-color: #f7f7f7;
+    padding-left: 20px;
+}
+.cost_total h3{
+    color: black;
+    margin-top: 15px;
+    margin-right: 30px;
+}
+.cost_total span{
+    font-size: 33px;
+    margin-top: 7px;
+    margin-right: 40px;
+    
+}
+.date{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    font-size: 22px;
+}
+ #theater_name{
+    font-size: 24px;
+} 
+#show_time{
+   font-size: 20px;
+} 
+.foot{
+    display: flex;
+}
+a{
+    background-color: #edd605;
+    width: 150px;
+    height: 40px;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 10px;
+    color:black;
+    margin-top: 20px;
+    
+    
+}
+button{
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-left: 10px;
+}  
+
+/* .seatbudget{
+    display: flex;
+    gap:10px;
+    margin-left: 35%;
+    margin-top: 25px;
+}
+.seatbudget h3{
+    color:white;
+    margin-top: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.seatbudget a {
+    border: 1px solid white;
+    color: #edd605;
+    width:30px;
+    height: 40px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Puritan', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+/* .seatbudget2{
+    display: flex;
+    gap:10px;
+    margin-left: 33%;
+    margin-top: 25px;
+}
+.seatbudget2 h3{
+    color:white;
+    margin-top: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.seatbudget2 a {
+    border: 1px solid white;
+    color: #edd605;
+    width:30px;
+    height: 40px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Puritan', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+

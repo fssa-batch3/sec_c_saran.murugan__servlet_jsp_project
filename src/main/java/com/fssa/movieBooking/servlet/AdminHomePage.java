@@ -48,7 +48,7 @@ public class AdminHomePage extends HttpServlet {
 		        e.printStackTrace();
 		    }
 		    finally {
-		    	RequestDispatcher dis = request.getRequestDispatcher("adminHomePage.jsp");
+		    	RequestDispatcher dis = request.getRequestDispatcher("/Pages/admin/adminHome.jsp");
 				 dis.forward(request, response);
 		    }
 
