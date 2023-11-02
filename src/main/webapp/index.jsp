@@ -236,6 +236,13 @@ header a #log-in-button {
 			<%
 			}
 			%>
+			
+
+	<%
+	String email = (String) session.getAttribute("email");
+	%>
+
+	<input type="hidden" value="<%=email%>" id="currentUserEmail">
 
 
 
@@ -361,6 +368,9 @@ header a #log-in-button {
 
   const toggleMenu = () =>
   document.body.classList.toggle("open");
+  
+  let curUserEmail = document.getElementById("currentUserEmail").value;
+
 
 </script>
 

@@ -1,349 +1,363 @@
+<%@ page import="com.fssa.movie.service.MovieService"%>
+<%@ page import="com.fssa.movie.model.*"%>
+<%@ page import="com.fssa.movie.DAO.MovieDAO.*"%>
 <!DOCTYPE html>
 <html lang="eng">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../Assets/css/payment_page.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Payment page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../Assets/css/payment_page.css">
 
 
 </head>
 
 <body>
+	
+	<div class="all-content">
 
-    <div class="all-content">
+		<div class="profile-payment">
 
-        <div class="profile-payment">
-            <div class="cab">
+			<div class="profile-contents">
+				<h2>YOUR CONTACT DETAILS</h2>
 
-                <h3 id="cab-head">LETS DRIVE WITH CAB</h3>
-            </div>
+				<div class="profile-details">
 
-            <div class="profile-contents">
-                <h2>YOUR CONTACT DETAILS</h2>
+					<div class="name">
+						<label>YOUR NAME</label> <br>
+						<!-- <input type="text" id="name" placeholder="ENTER YOUR NAME"> -->
+						<h3 id="name"></h3>
+					</div>
 
-                <div class="profile-details">
+					<div class="email">
+						<label>E-MAIL</label> <br>
+						<!-- <input type="text" id="email"placeholder="ENTER YOUR E-MAIL"> -->
+						<h3 id="email"></h3>
+					</div>
 
-                    <div class="name">
-                        <label>YOUR NAME</label>
-                        <br>
-                        <!-- <input type="text" id="name" placeholder="ENTER YOUR NAME"> -->
-                        <h3 id="name"></h3>
-                    </div>
+					<div class="phone">
+						<label>PHONE</label> <br>
+						<!-- <input type="text" id="phone" placeholder="ENTER YOUR PHONE"> -->
+						<h3 id="number"></h3>
+					</div>
+				</div>
+			</div>
+			
+	<%
+	String email = (String) session.getAttribute("email");
+	%>
 
-                    <div class="email">
-                        <label>E-MAIL</label>
-                        <br>
-                        <!-- <input type="text" id="email"placeholder="ENTER YOUR E-MAIL"> -->
-                        <h3 id="email"></h3>
-                    </div>
+	<input type="hidden" value="<%=email%>" id="currentUserEmail">
 
-                    <div class="phone">
-                        <label>PHONE</label>
-                        <br>
-                        <!-- <input type="text" id="phone" placeholder="ENTER YOUR PHONE"> -->
-                        <h3 id="number"></h3>
-                    </div>
-                </div>
-            </div>
+			
 
-            <div class="payment-section">
+			<div class="payment-section">
 
-                <h2>PAYMENT OPTIONS</h2>
+				<h2>PAYMENT OPTIONS</h2>
 
-                <div class="pay-main">
+				<div class="pay-main">
 
-                    <div class="payment-heading">
-                        <ul>
-                            <li id="credit-card">CREDIT CARD</li>
-                            <li id="debit-card">DEBIT CARD</li>
-                            <li id="net-banking">NET BANKING</li>
-                            <li id="upi">UPI PAYMENT</li>
-                            <li id="phonepe">PHONEPE</li>
-                            <li id="paytm">PAYTM</li>
-                        </ul>
+					<div class="payment-heading">
+						<ul>
+							<li id="credit-card">CREDIT CARD</li>
+							<li id="debit-card">DEBIT CARD</li>
+							<li id="net-banking">NET BANKING</li>
+							<li id="upi">UPI PAYMENT</li>
+							<li id="phonepe">PHONEPE</li>
+							<li id="paytm">PAYTM</li>
+						</ul>
 
-                    </div>
+					</div>
 
-                    <div class="payment-content">
+					<div class="payment-content">
 
-                        <div id="credit-card-content" class="credit-card">
-                            <div class="card">
-                                <form>
-                                    <div class="card-number">
-                                        <label>CARD NUMBER</label>
-                                        <br>
-                                        <input type="text" placeholder="XXXX XXXX XXXX XXXX">
-                                    </div>
+						<div id="credit-card-content" class="credit-card">
+							<div class="card">
+								<form method="post" id="form_credit">
+									<div class="card-number">
+										<label>CARD NUMBER</label> <br> <input type="text"
+											placeholder="XXXX XXXX XXXX XXXX">
+									</div>
 
-                                    <div class="valid-cvv">
-                                        <div class="valid">
-                                            <label>VALID</label>
-                                            <input type="text" placeholder="MM/YYYY">
-                                        </div>
+									<div class="valid-cvv">
+										<div class="valid">
+											<label>VALID</label> <input type="text" placeholder="MM/YYYY">
+										</div>
 
-                                        <div class="cvv">
-                                            <label>CVV</label>
-                                            <input type="text" placeholder="XXX">
-                                        </div>
-                                    </div>
+										<div class="cvv">
+											<label>CVV</label> <input type="text" placeholder="XXX">
+										</div>
+									</div>
 
-                                    <div class="card-name">
-                                        <label> NAME</label>
-                                        <br>
-                                        <input type="text" placeholder="CARD HOLDER'S NAME">
-                                    </div>
+									<div class="card-name">
+										<label> NAME</label> <br> <input type="text"
+											placeholder="CARD HOLDER'S NAME">
+									</div>
 
-                                    <div class="terms">
-                                        <input type="checkbox">
-                                        <p>I have read and accepted the terms and conditions of this transaction </p>
-                                    </div>
+									<div class="terms">
+										<input type="checkbox">
+										<p>I have read and accepted the terms and conditions of
+											this transaction</p>
+									</div>
 
-                                    <div class="credit-button-div">
-                                        <!-- <button class="credit-button" id="payment">MAKE PAYMENT</button> -->
+									<div class="credit-button-div">
+										<!-- <button class="credit-button" id="payment">MAKE PAYMENT</button> -->
 
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+									</div>
+								</form>
+							</div>
+						</div>
 
-                        <div id="debit-card-content" class="debit-card">
-                            <div class="card">
-                                <form>
-                                    <div class="card-number">
-                                        <label>CARD NUMBER</label>
-                                        <br>
-                                        <input type="text" placeholder="XXXX XXXX XXXX XXXX">
-                                    </div>
+						<div id="debit-card-content" class="debit-card">
+							<div class="card">
+								<form>
+									<div class="card-number">
+										<label>CARD NUMBER</label> <br> <input type="text"
+											placeholder="XXXX XXXX XXXX XXXX">
+									</div>
 
-                                    <div class="valid-cvv">
-                                        <div class="valid">
-                                            <label>VALID</label>
-                                            <input type="text" placeholder="MM/YYYY">
-                                        </div>
+									<div class="valid-cvv">
+										<div class="valid">
+											<label>VALID</label> <input type="text" placeholder="MM/YYYY">
+										</div>
 
-                                        <div class="cvv">
-                                            <label>CVV</label>
-                                            <input type="text" placeholder="XXX">
-                                        </div>
-                                    </div>
+										<div class="cvv">
+											<label>CVV</label> <input type="text" placeholder="XXX">
+										</div>
+									</div>
 
-                                    <div class="card-name">
-                                        <label> NAME</label>
-                                        <br>
-                                        <input type="text" placeholder="CARD HOLDER'S NAME">
-                                    </div>
+									<div class="card-name">
+										<label> NAME</label> <br> <input type="text"
+											placeholder="CARD HOLDER'S NAME">
+									</div>
 
-                                    <div class="terms">
-                                        <input type="checkbox">
-                                        <p>I have read and accepted the LETS SHOW terms and conditions of this
-                                            transaction </p>
-                                    </div>
+									<div class="terms">
+										<input type="checkbox">
+										<p>I have read and accepted the LETS SHOW terms and
+											conditions of this transaction</p>
+									</div>
 
-                                    <div class="debit-button-div">
+									<div class="debit-button-div"></div>
+								</form>
+							</div>
+						</div>
 
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+						<div id="net-banking-content" class="net-banking">
 
-                        <div id="net-banking-content" class="net-banking">
+							<h3>SELECT BANKS</h3>
 
-                            <h3>SELECT BANKS</h3>
+							<select id="bank-select">
+								<option>AXIS BANK</option>
+								<option>STATE BANK OF INDIA</option>
+								<option>ICICI BANK</option>
+								<option>HDFC BANK</option>
+								<option>KOTAK BANK</option>
+								<option>CANARA BANK</option>
+								<option>ANDHRA BANK</option>
+							</select>
 
-                            <select id="bank-select">
-                                <option>AXIS BANK</option>
-                                <option>STATE BANK OF INDIA</option>
-                                <option>ICICI BANK</option>
-                                <option>HDFC BANK</option>
-                                <option>KOTAK BANK</option>
-                                <option>CANARA BANK</option>
-                                <option>ANDHRA BANK</option>
-                            </select>
+							<div class="terms">
+								<input type="checkbox">
+								<p>
+									I have read and accepted the LETS SHOW terms<br> and
+									conditions of this transaction
+								</p>
+							</div>
 
-                            <div class="terms">
-                                <input type="checkbox">
-                                <p>
-                                    I have read and accepted the LETS SHOW terms<br> and conditions of this transaction
-                                </p>
-                            </div>
+							<div class="net-button-div"></div>
+						</div>
 
-                            <div class="net-button-div">
+						<div id="upi-content" class="upi">
 
-                            </div>
-                        </div>
+							<div class="upi-name">
+								<label>ACCOUNT NAME</label> <br> <input type="text"
+									placeholder="UPI PAYER ACCOUNT">
+							</div>
 
-                        <div id="upi-content" class="upi">
+							<div class="terms">
+								<input type="checkbox">
+								<p>
+									I have read and accepted the LETS SHOW terms and conditions <br>of
+									this transaction
+								</p>
+							</div>
 
-                            <div class="upi-name">
-                                <label>ACCOUNT NAME</label>
-                                <br>
-                                <input type="text" placeholder="UPI PAYER ACCOUNT">
-                            </div>
+							<div class="upi-button-div"></div>
+						</div>
 
-                            <div class="terms">
-                                <input type="checkbox">
-                                <p>
-                                    I have read and accepted the LETS SHOW terms and conditions <br>of this transaction
-                                </p>
-                            </div>
+						<div id="paytm-content" class="paytm">
 
-                            <div class="upi-button-div">
+							<div class="terms">
+								<input type="checkbox">
+								<p>
+									I have read and accepted the LETS SHOW terms and conditions of<br>
+									this transaction
+								</p>
+							</div>
 
-                            </div>
-                        </div>
+							<div class="paytm-button-div">
+								<!-- <button class="paytm-button">MAKE PAYMENT</button> -->
+							</div>
+						</div>
 
-                        <div id="paytm-content" class="paytm">
+						<div id="phonepe-content" class="phonepe">
 
-                            <div class="terms">
-                                <input type="checkbox">
-                                <p>
-                                    I have read and accepted the LETS SHOW terms and conditions of<br> this transaction
-                                </p>
-                            </div>
+							<div class="terms">
+								<input type="checkbox">
+								<p>
+									I have read and accepted the LETS SHOW terms and conditions of<br>
+									this transaction
+								</p>
+							</div>
 
-                            <div class="paytm-button-div">
-                                <!-- <button class="paytm-button">MAKE PAYMENT</button> -->
-                            </div>
-                        </div>
+							<div class="phonepe-button-div"></div>
+							<!-- <button class="phonepe-button" id="payment">MAKE PAYMENT</button> -->
+						</div>
 
-                        <div id="phonepe-content" class="phonepe">
+					</div>
 
-                            <div class="terms">
-                                <input type="checkbox">
-                                <p>
-                                    I have read and accepted the LETS SHOW terms and conditions of<br> this transaction
-                                </p>
-                            </div>
+				</div>
 
-                            <div class="phonepe-button-div">
+			</div>
 
-                            </div>
-                            <!-- <button class="phonepe-button" id="payment">MAKE PAYMENT</button> -->
-                        </div>
+		</div>
 
-                    </div>
 
-                </div>
 
-            </div>
 
-        </div>
+		<%
+		int movieId = Integer.parseInt(request.getParameter("movie_id"));
+		MovieService movieService = new MovieService();
+		Movie movie = movieService.getMovieById(movieId);
 
-        <aside>
+		String imagePath = movie.getMovieBanner();
+		%>
 
-            <div class="ticket-content">
+		<aside>
 
-                <div class="movie-details">
-                    <h2 id="movie_name"></h2>
-                    <h2>
-                        {<span id="language"></span>}
-                    </h2>
-                    <h2>
-                        {<span id="frame"></span>}
-                    </h2>
-                    <span style="margin-top: 28px; font-size: 17px; color: #9d9d9d;"></span>
-                </div>
+			<%
+			String title;
+			try {
 
-                <div class="theater">
-                    <h2 id="theatre_name"></h2>
-                    <h2>
-                        <span id="show_date"></span>
-                        <span id="show_month"></span>
-                        <span id="show_time"></span>
-                    </h2>
-                </div>
+				movieService = new MovieService();
+				Movie movie2 = movieService.getMovieById(movieId);
 
-                <hr style="color: #9d9d9d; border: 1px solid #9d9d9d ; width: 90%;">
+				// Check if the movie is found
+				if (movie2 != null) {
+					// Use the properties of the Movie object as needed
+					title = movie2.getMovieName();
+					String movie_banner_image = movie2.getMovieBanner();
+				    String movie_main_image = movie2.getMovieImage();
+					String language = movie2.getLanguage().getValue();
+					String frame = movie2.getFormat().getValue();
+			%>
 
-                <div class="seat">
-                    <h2>SEAT INFO</h2>
+                <input type="hidden" value="<%=movie_main_image%>" id="movie_image">
+                <input type="hidden" value="<%=movie_banner_image%>" id="banner_image">
+                
+                
+                
 
-                    <span id="seat"></span>
-                </div>
+			<div class="ticket-content">
 
-                <div class="total-expensive">
+				<div class="movie-details">
+					<h2 id="movie_name"><%=title%></h2>
+					<h2>
+						{<span id="language"><%=language%></span>}
+					</h2>
+					<h2>
+						{<span id="frame"><%=frame%></span>}
+					</h2>
+					<span style="margin-top: 28px; font-size: 17px; color: #9d9d9d;"></span>
+				</div>
 
-                    <div class="tickets">
-                        <h3>TICKETS<span id="ticket_count"></span></h3>
-                        <h3>
-                            INR <span id="ticket-price"></span>
-                        </h3>
-                    </div>
+				<div class="theater">
+					<h2 id="theatre_name"></h2>
+					<h2>
+						<span id="show_date"></span> <span id="show_month"></span> <span
+							id="show_time"></span>
+					</h2>
+				</div>
 
-                    <!-- <div class="conv-fees">
+				<hr style="color: #9d9d9d; border: 1px solid #9d9d9d; width: 90%;">
+
+				<div class="seat">
+					<h2>SEAT INFO</h2>
+
+					<span id="seat"></span>
+				</div>
+
+				<div class="total-expensive">
+
+					<div class="tickets">
+						<h3>
+							TICKETS<span id="ticket_count"></span>
+						</h3>
+						<h3>
+							INR <span id="ticket-price"></span>
+						</h3>
+					</div>
+
+					<!-- <div class="conv-fees">
                         <h3>CONV.FEES</h3>
                         <h3>INR <span id="conv-price"></span></h3>
                     </div> -->
 
-                    <div class="cab-total">
-                        <h3>
-                            CAB<span id="cab_count"></span>
-                        </h3>
-                        <h3>
-                            <span id="cab-price"></span>
-                        </h3>
-                    </div>
 
-                </div>
+				</div>
 
-                <div class="total-tickets-cost">
+				<div class="total-tickets-cost">
 
-                    <div class="total">
-                        <h3>
-                            TOTAL<br>(INR)
-                        </h3>
-                        <h1 id="total-payment"></h1>
-                    </div>
+					<div class="total">
+						<h3>
+							TOTAL<br>(INR)
+						</h3>
+						<h1 id="total-payment"></h1>
+					</div>
 
-                </div>
+				</div>
 
-            </div>
+			</div>
 
-        </aside>
 
-    </div>
 
-    <script>
+			<%
+			} else {
+			%>
+			<p>Movie not found</p>
+			<%
+			}
+			} catch (Exception e) {
+			e.printStackTrace();
+			}
+			%>
+
+
+		</aside>
+
+
+
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	<script>
+    
+    
+         let curUserEmail = document.getElementById("currentUserEmail").value;
+	     console.log(curUserEmail);
+	
+
+         const urlParams = new URLSearchParams(window.location.search);
+         let movie_id = urlParams.get('movie_id');
+    
+
+
+    
+    
         const user_profile = JSON.parse(localStorage.getItem("profile_details"));
-
-        const name = document.getElementById("name");
-        name.innerText = user_profile.name;
-
-        const email = document.getElementById("email");
-        email.innerText = user_profile.email;
-
-        const phone = document.getElementById("number");
-        phone.innerText = user_profile.number;
-
-        const movie_list = JSON.parse(localStorage.getItem("show_movie_details"));
-
-        const url = window.location.search;                // ?name=Arun
-        const urlParams = new URLSearchParams(url);    //"name":"ponniyinselvan"    // converting string into key value pair
-        const username = urlParams.get("name")             // return value of the "name" key
-        console.log(username);
-
-        let res;
-        movie_list.find((e) => {
-            if (e.name.movie_name == username) { //arr[0],arr[1]  =e
-                return res = e;
-            }
-
-            return res = 0;
-
-        });
-
-        const movie_name = document.getElementById("movie_name");
-        movie_name.innerText = res.name.movie_name;
-
-
-        const movie_language = document.getElementById("language");
-        movie_language.innerText = res.language;
-
-        const movie_frame = document.getElementById("frame");
-        movie_frame.innerText = res.frame;
 
 
         const users_booking = JSON.parse(localStorage.getItem("user_booking"));
@@ -366,44 +380,15 @@
         const seat_count = document.getElementById("ticket_count")
         seat_count.innerText = users_booking[0].seat_count;
 
-        // const cab_count = document.getElementById("cab_count")
-        // cab_count.innerText = users_booking[0].seat_count;
+       
 
-
-        const cab = document.querySelector(".cab")
-
-        const cab_button = document.createElement("button");
-        cab_button.setAttribute("class", "a-cab")
-        cab.append(cab_button);
-
-        const a = document.createElement("a")
-        a.setAttribute("href", `cab.html?name=${res.name.movie_name}`);
-        a.setAttribute("class", "a-cab")
-        a.innerText = "book now";
-        cab_button.append(a);
-
-
-        if (users_booking[0].cab_money) {
-
-            const cab_price = document.getElementById("cab-price");
-            cab_price.innerText = users_booking[0]["cab_money"];
-
-            const ticket_price = document.getElementById("ticket-price")
-            ticket_price.innerText = users_booking[0].seat_price
-
-
-            ticket_total = Number(ticket_price.innerText) + Number(cab_price.innerText);
-
-            const total_payment = document.getElementById("total-payment")
-            total_payment.innerText = ticket_total
-        } else {
             const ticket_price = document.getElementById("ticket-price")
             ticket_price.innerText = users_booking[0].seat_price
 
             const ticket_payment = document.getElementById("total-payment")
             ticket_payment.innerText = users_booking[0].seat_price;
 
-        }
+       
 
 
 
@@ -485,56 +470,57 @@
 
         const credit_button = document.createElement("button");
         credit_button.setAttribute("class", "credit-button");
+        credit_button.innerText = "MAKE PAYMENT"
+        credit_button.setAttribute("type", "submit")
         credit_button_div.append(credit_button);
 
         credit_button.addEventListener("click", function () {
 
-            const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
-            if (JSON.parse(localStorage.getItem("user_booking"))) {
+
+        	const users_booking = JSON.parse(localStorage.getItem("user_booking"));
+        	
+
+        	const url = "http://localhost:8080/movieBooking-web/BookingHistory";            
+            
+            
+            
+            axios.post(url, users_booking[0])
+            .then(function (response) {
+                console.log(response.data);
+                window.location.href = "ticket.jsp?movie_id=" + movie_id;
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            
+
+            
 
 
-                user_booking.find(e => {
-                    if (e.email == e.email) {
-                      
-                        e.ticket_price = ticket_total
-                        localStorage.setItem("user_booking", JSON.stringify(user_booking))
-
-
-                    }
-                    else {
-                     
-
-                        const booking_data = {
-                            "email": users.booking,
-                            "show_day": day,
-                            "show_date": date,
-                            "show_month": month,
-                            "theatre_name": theatre_name,
-                            "seat_names": selectedSeats,
-                            "booking_id": randomString,
-                            // "seat_count":selectseatcount,
-                            "seat_price": total.innerText,
-                            "ticket_price": ticket_total,
-                            "show_time": show_time,
-                        }
-                        user_booking.push(booking_data)
-
-                        // users.push(booking_data)
-
-                        localStorage.setItem("user_booking", JSON.stringify(user_booking))
-                    }
-                })
-
-                
-            }
 
         })
+        
+                    
+           
+        
+          
 
-        let credit_a = document.createElement("a");
-        credit_a.innerText = "MAKE PAYMENT"
-        credit_a.setAttribute("class", "a_button");
-        credit_a.setAttribute("href", `ticket.html?name=${res.name.movie_name}`);
-        credit_button.append(credit_a);
+  const movie_name= document.getElementById("movie_name").innerText;
+  const movie_language= document.getElementById("language").innerText;
+  const movie_format= document.getElementById("frame").innerText;
+  const movie_image= document.getElementById("movie_image").value;
+  const banner_image= document.getElementById("banner_image").value;
+
+
+
+        //let credit_a = document.createElement("a");
+        //credit_a.innerText = "MAKE PAYMENT"
+        //credit_a.setAttribute("class", "a_button");
+        
+        //credit_a.setAttribute("href",  "ticket.jsp?movie_id="+movie_id);
+        //credit_button.append(credit_a);
 
         const paytm_button_div = document.querySelector(".paytm-button-div");
 
@@ -554,6 +540,12 @@
             if (JSON.parse(localStorage.getItem("user_booking"))) {
                 user_booking.find(e => {
                     if (e.email == e.email) {
+                    	
+                    	e.movie_main_image = movie_image
+                        e.movie_banner_image = banner_image
+                        e.movie_title = movie_name
+                        e.movie_format = movie_format
+                        e.movie_language =movie_language
                         e.ticket_price = ticket_total
                         localStorage.setItem("user_booking", JSON.stringify(user_booking))
 
@@ -567,10 +559,17 @@
                             "theatre_name": theatre_name,
                             "seat_names": selectedSeats,
                             "booking_id": randomString,
-                            // "seat_count":selectseatcount,
+                             "seat_count":selectseatcount,
                             "seat_price": total.innerText,
                             "ticket_price": ticket_total,
                             "show_time": show_time,
+                            "movie_main_image": movie_image,
+                            "movie_banner_image": banner_image,
+                            "movie_title": movie_name,
+                            "movie_format": movie_format,
+                            "movie_language": movie_language,
+
+
                         }
                         user_booking.push(booking_data)
 
@@ -614,7 +613,7 @@
                             "theatre_name": theatre_name,
                             "seat_names": selectedSeats,
                             "booking_id": randomString,
-                            // "seat_count":selectseatcount,
+                            "seat_count":selectseatcount,
                             "seat_price": total.innerText,
                             "ticket_price": ticket_total,
                             "show_time": show_time,
@@ -662,7 +661,7 @@
                             "theatre_name": theatre_name,
                             "seat_names": selectedSeats,
                             "booking_id": randomString,
-                            // "seat_count":selectseatcount,
+                            "seat_count":selectseatcount,
                             "seat_price": total.innerText,
                             "ticket_price": ticket_total,
                             "show_time": show_time,

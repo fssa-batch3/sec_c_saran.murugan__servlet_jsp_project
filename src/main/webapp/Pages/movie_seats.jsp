@@ -269,13 +269,15 @@ button {
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 900px; /* Adjust as needed */
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 900px; /* Adjust as needed */
 }
-.main{
-margin-left:20%;
+
+.main {
+	margin-left: 20%;
 }
+
 .seat {
 	width: 35px;
 	height: 35px;
@@ -353,6 +355,13 @@ margin-left:20%;
 		<h3>Screen on this way</h3>
 	</div>
 
+	<%
+	String email = (String) session.getAttribute("email");
+	%>
+
+	<input type="hidden" value="<%=email%>" id="currentUserEmail">
+
+
 	<div class="seat_disclaimer">
 
 		<div class="show-case">
@@ -374,8 +383,8 @@ margin-left:20%;
 
 	<div class="seatcost-budget">
 
-		
-		<h2>First class(Rs130)</h2>
+
+		<h2 id="movie">130</h2>
 
 	</div>
 
@@ -417,13 +426,18 @@ margin-left:20%;
 
 		<p id="seat-length" style="display: none;"></p>
 
-		<img onclick="bookSeats()" id="next-arrow"
-			src="https://i.ibb.co/wSgdWYq/right-arrow.png" alt="logo">
+
+		<img id="next-arrow" src="https://i.ibb.co/wSgdWYq/right-arrow.png"
+			alt="logo">
 
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 	<script>
+	
+	let curUserEmail = document.getElementById("currentUserEmail").value;
+	console.log(curUserEmail);
+	
 
     const urlParams = new URLSearchParams(window.location.search);
     let movie_id = urlParams.get('movie_id');
@@ -458,7 +472,7 @@ margin-left:20%;
 
   array.forEach((show_list) => {
   	
-	  
+      
 
 	     
 	     if (movie_id == show_list.movie_id) {
@@ -504,12 +518,12 @@ margin-left:20%;
        //movie_name.innerText = res.name.movie_name;
        //banner.append(movie_name);
 
-         let next_arrow = document.getElementById("next-arrow");
+         //let next_arrow = document.getElementById("next-arrow");
 
-         let a = document.createElement("a");
-         a.innerText = "submit";
-         a.setAttribute("href", "movie_payment_page.html?name=" + res["name"]["movie_name"]);
-         next_arrow.append(a);
+        // let a = document.createElement("a");
+        // a.innerText = "submit";
+        // a.setAttribute("href", "movie_payment_page.html?name=" + res["name"]["movie_name"]);
+        // next_arrow.append(a);
         
         
 
@@ -529,31 +543,8 @@ margin-left:20%;
 
         const show_month = document.getElementById("show_month");
         show_month.innerHTML = users_booking[0].show_month;
-        console.log();
 
-        const container = document.querySelectorAll(".container");
-        const selectedSeatsList = document.getElementById("selected-seats");
-        const total = document.getElementById("total");
-        const ticketprice = document.getElementById("movie").value;
-
-
-
-
-        let selectedSeats = [];
-
-        // const booking_history = JSON.parse(localStorage.getItem("booking_history"));
-
-
-        // console.log(booking_history);
-        // let seats_name= booking_history[i].seat_name
-
-
-
-
-
-
-        const seats = document.querySelectorAll(".seat");
-
+        
 
         let booking_history = JSON.parse(localStorage.getItem("booking_history"));
         let profile = JSON.parse(localStorage.getItem("profile_details"));
@@ -568,14 +559,8 @@ margin-left:20%;
 
 
 
-            if (booking_history[i].movie_name == res.name.movie_name && theater_name.innerText == booking_history[i].theatre_name && show_time.innerText == booking_history[i].show_time && show_date.innerText == booking_history[i].show_date && show_day.innerText == booking_history[i].show_day && show_month.innerHTML == booking_history[i].show_month) {
-
-                console.log("hiii");
-                    
-                    
-            console.log(booking_history[i].seat_name.split(','))
+            if (booking_history[i].movie_name == res.name.movie_name && theater_name.innerText == booking_history[i].theatre_name && show_time.innerText == booking_history[i].show_time && show_date.innerText == booking_history[i].show_date && show_day.innerText == booking_history[i].show_day && show_month.innerHTML == booking_history[i].show_month) {         
             seats.forEach((e)=>{
-         
             booking_history[i].seat_name.split(',').find((el)=>{
                     if(el==e.innerText){
                         e.classList.add('occupied')
@@ -592,11 +577,25 @@ margin-left:20%;
     }
 
 
+        
+        const container = document.querySelectorAll(".container");
+        const selectedSeatsList = document.getElementById("selected-seats");
+        const total = document.getElementById("total");
+        const ticketprice = document.getElementById("movie").innerText;
+
+
+
+
+        let selectedSeats = [];
+
+        const seats = document.querySelectorAll(".seat");
+
+
 
 
         seats.forEach(seat => {
             seat.addEventListener("click", () => {
-                if (seat.classList.contains("selected") ) {
+                if (seat.classList.contains("selected")) {
                     seat.classList.remove("selected");
                     selectedSeats = selectedSeats.filter(name => name !== seat.dataset.name);
                 } else {
@@ -645,8 +644,7 @@ margin-left:20%;
                 alert(" You have select 10 seats only!");
             }
             else {
-
-                window.location.href = `movie_payment_page.html?name=${res.name.movie_name}`;
+                window.location.href = "movie_payment_page.jsp?movie_id="+movie_id;
 
                 const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
                 if (JSON.parse(localStorage.getItem("user_booking"))) {
@@ -687,14 +685,22 @@ margin-left:20%;
                 updateSelectedSeatsList();
             }
         }
-        
+        let arrow = document.querySelector("#next-arrow");
+        arrow.addEventListener("click", function(){
+        	bookSeats();
+        })
         
 	     
         }
   )
+ 
               
               }
-  
+        
+           
+            
+            
+        
               
     </script>
 

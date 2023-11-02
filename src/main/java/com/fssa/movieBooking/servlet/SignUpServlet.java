@@ -34,6 +34,7 @@ public class SignUpServlet extends HttpServlet {
         String conPassword = request.getParameter("ConPassword");
 
         PrintWriter out = response.getWriter();
+        
 
         User user = new User(name, email, password, phoneNumber);
 

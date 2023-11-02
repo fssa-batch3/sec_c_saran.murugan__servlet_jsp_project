@@ -39,8 +39,6 @@ public class LoginUserServlet extends HttpServlet {
 				session.setAttribute("currentUser", user);
 				session.setAttribute("email", email);
 				session.setAttribute("userid", userid);
-				System.out.println(userid);
-				System.out.println(email);
 				CustomLogger.info(user.toString());
 				request.setAttribute("successMsg", "Logged in successfully");
 				response.sendRedirect(request.getContextPath() + "/Pages/profile.jsp");

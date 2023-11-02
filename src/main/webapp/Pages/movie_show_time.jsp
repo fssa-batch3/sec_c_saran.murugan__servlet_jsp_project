@@ -222,42 +222,61 @@ hr {
 	<header>
 		<img src="https://i.ibb.co/LPg6ns5/logo.png" alt="logo">
 	</header>
-	<% 
-     int movieId = Integer.parseInt(request.getParameter("movie_id"));
-     MovieService movieService = new MovieService();
-     Movie movie = movieService.getMovieById(movieId);
+	<%
+	int movieId = Integer.parseInt(request.getParameter("movie_id"));
+	MovieService movieService = new MovieService();
+	Movie movie = movieService.getMovieById(movieId);
 
-     String imagePath = movie.getMovieBanner(); 
-     String divStyle = "background-image: url('" + imagePath + "');";
-     
-    %>
+	String imagePath = movie.getMovieBanner();
+	String divStyle = "background-image: url('" + imagePath + "');";
+	%>
 
 
 
 
 	<div class="banner" style="<%=divStyle%>">
 		<%
-		
-		   String title;
-            try {
-            	
-                 movieService = new MovieService();
-                 Movie movie2 = movieService.getMovieById(movieId);
+		String title;
+		try {
 
-                // Check if the movie is found
-                if (movie2 != null) {
-                // Use the properties of the Movie object as needed
-                     title = movie2.getMovieName();
-                    String language = movie2.getLanguage().getValue();
-                    String format = movie2.getFormat().getValue();
-                    String genre = movie2.getGenre().getValue();
-                    String certificate = movie2.getCertificate().getValue();
-                    String description = movie2.getDescription();
-        %>
+			movieService = new MovieService();
+			Movie movie2 = movieService.getMovieById(movieId);
+
+			// Check if the movie is found
+			if (movie2 != null) {
+				// Use the properties of the Movie object as needed
+
+				String movie_banner_image = movie2.getMovieBanner();
+				String movie_main_image = movie2.getMovieImage();
+
+				title = movie2.getMovieName();
+				String language = movie2.getLanguage().getValue();
+				String format = movie2.getFormat().getValue();
+				String genre = movie2.getGenre().getValue();
+				String certificate = movie2.getCertificate().getValue();
+				String description = movie2.getDescription();
+		%>
+
+		<input type="hidden" value="<%=movie_main_image%>" id="movie_image">
+		<input type="hidden" value="<%=movie_banner_image%>" id="banner_image">
+		<input type="hidden" value="<%=title%>" id="movie_name"> <input
+			type="hidden" value="<%=language%>" id="language"> <input
+			type="hidden" value="<%=format%>" id="format"> <input
+			type="hidden" value="<%=genre%>" id="genre"> <input
+			type="hidden" value="<%=certificate%>" id="certificate"> <input
+			type="hidden" value="<%=description%>" id="description">
+
+
+
+
+
+
+
+
 		<h1 id="movie_name"><%=title%></h1>
 
 		<div class="timeandcast">
-			<h4><%= genre%></h4>
+			<h4><%=genre%></h4>
 			<h4></h4>
 			<h4><%=format%></h4>
 			<h4></h4>
@@ -270,15 +289,15 @@ hr {
 		</div>
 	</div>
 
-	<% 
+	<%
 	String email = (String) session.getAttribute("email");
 	%>
-	
+
 	<input type="hidden" value="<%=email%>" id="currentUserEmail">
 
 	<div class="main">
-	
-	
+
+
 
 		<h3 id="IndiaTime"
 			style="color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></h3>
@@ -360,32 +379,42 @@ hr {
 		</div>
 
 	</div>
-	
-	
-		<%
-                } else {
-        %>
-		<p>Movie not found</p>
-		<%
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        %>
+
+
+	<%
+	} else {
+	%>
+	<p>Movie not found</p>
+	<%
+	}
+	} catch (Exception e) {
+	e.printStackTrace();
+	}
+	%>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script>
 	
 	let curUserEmail = document.getElementById("currentUserEmail").value;
 	console.log(curUserEmail);
 	
-    swal("Please select the show date !");
+    //swal("Please select the show date !");
 
     const urlParams = new URLSearchParams(window.location.search);
     let movie_id = urlParams.get('movie_id');
     
-    console.log(movie_id)
+
+
+	
+    const movie_image= document.getElementById("movie_image").value;
+    const banner_image= document.getElementById("banner_image").value;
+    const movie_name= document.getElementById("movie_name").value;
+    const language= document.getElementById("language").value;
+    const format= document.getElementById("format").value;
+    const genre= document.getElementById("genre").value;
+    const certificate= document.getElementById("certificate").value;
+    const description= document.getElementById("description").value;
     
-    //THEATRE SECTION STARTS//
+    
 
     const day = "";
     const month = "";
@@ -453,47 +482,50 @@ hr {
                 	
       
 
-    array.forEach((theatre_list) => {
     	
     	
     	
-    	function formatTime(timeString) {
-    	    let hours = parseInt(timeString.split(':')[0]);
-    	    let minutes = timeString.split(':')[1];
-    	    let period = (hours >= 12) ? 'PM' : 'AM';
-
-    	    if (hours > 12) {
-    	        hours -= 12;
-    	    }
-
-    	    return hours + ':' + minutes + ' ' + period;
-    	}
-
-    	let formattedTime = formatTime(theatre_list.show_time);
-    	console.log(formattedTime); 
-
     	
-     
-    	
-    	
-    	function formatDate(dateString) {
-    	    const options = { weekday: 'long', month: 'long', day: 'numeric' };
-    	    const date = new Date(dateString);
-    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
-    	    const [month, day] = monthAndDay.split(' ');
-    	    
-    	    return { dayOfWeek, month, formattedDate };
-    	}
+	    array.forEach((theatre_list) => {
 
-    	let formattedDate = formatDate(theatre_list.show_date);
-         
-    	const week = formattedDate.dayOfWeek.slice(0, 3);
-    	const month = formattedDate.month.slice(0, 3); 
-	    const date = formattedDate.formattedDate.slice(21, 23);
+	    	
+	    	function formatTime(timeString) {
+	    	    let hours = parseInt(timeString.split(':')[0]);
+	    	    let minutes = timeString.split(':')[1];
+	    	    let period = (hours >= 12) ? 'PM' : 'AM';
 
+	    	    if (hours > 12) {
+	    	        hours -= 12;
+	    	    }
 
-    	 if (movie_id == theatre_list.movie_id) {
+	    	    return hours + ':' + minutes + ' ' + period;
+	    	}
+
+	    	let formattedTime = formatTime(theatre_list.show_time);
+
+	    	
+	     
+	    	function formatDate(dateString) {
+	    	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+	    	    const date = new Date(dateString);
+	    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+	    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+	    	    return {
+	    	        dayOfWeek,
+	    	        month: monthAndDay.slice(0, 3),
+	    	        day: parseInt(monthAndDay.slice(4))
+	    	        };
+	    	    }
+	    	           let formattedInfo = formatDate(theatre_list.show_date);
+	    	           
+	    	           
+	    	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+	    	           const month = formattedInfo.month
+	    	           const date = formattedInfo.day
+
+		    
+    	 if (movie_id == theatre_list.movie_id && date == date_div[0].innerText && month == month_div[0].innerText) {
 
 
         const theatre_show1 = document.querySelector(".theatre_show1");
@@ -515,9 +547,6 @@ hr {
         theatre_det.append(showtime);
 
         
-        const name1 = document.getElementById("movie_name").innerText;
-        console.log(movie_id+"data");
-
          const a = document.createElement("a");
          a.innerText =formattedTime;
          a.setAttribute("class", "show_times1");
@@ -532,34 +561,61 @@ hr {
 
     	 }
     	 
-    	 const para2 = document.querySelectorAll(".show_time1 a")
-         const theatre_dev = document.querySelectorAll(".theatre_det");
+    	 const showtime1 = document.querySelectorAll(".show_time1 a")
+         const theatre_dev1 = document.querySelectorAll(".theatre_det");
 
-         // const users = JSON.parse(localStorage.getItem("profile_details"));
+    	    const movie_image= document.getElementById("movie_image").value;
+    	    const banner_image= document.getElementById("banner_image").value;
+    	    const movie_name= document.getElementById("movie_name").value;
+    	    const language= document.getElementById("language").value;
+    	    const format= document.getElementById("format").value;
+    	    const genre= document.getElementById("genre").value;
+    	    const certificate= document.getElementById("certificate").value;
+    	    const description= document.getElementById("description").value;
+    	    
+    	    
 
-         para2.forEach((e) => {
+         
+         showtime1.forEach((e) => {
            e.addEventListener("click", (el) => {
-             // console.log(el.target.children[0].children[0].innerText + el.target.children[0].children[1].innerText + el.target.children[0].children[2].innerText);
+      
              const show_time = el.target.innerText;
 
              const theatre_name = el.target.parentElement.parentElement.children[0].innerText;
 
-             const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+             const user_booking = JSON.parse(localStorage.getItem("user_booking")) ? JSON.parse(localStorage.getItem("user_booking")) : [];
              if (JSON.parse(localStorage.getItem("user_booking"))) {
                user_booking.find(e => {
             	   
                
-                 if (e.curUserEmail == e.email) {
+                 if (e.email == e.email) {
                    e.theatre_name = theatre_name
                    e.show_time = show_time
+                   e.movie_main_image = movie_image
+                   e.movie_banner_image = banner_image
+                   e.movie_title = movie_name
+                   e.language = language
+                   e.format = format
+                   e.genre = genre
+                   e.certificate = certificate
+                   e.description = description
+                   
                    localStorage.setItem("user_booking", JSON.stringify(user_booking))
                  }
                  else {
                    const booking_data = {
-                     "email": users.booking,
+                     "email": curUserEmail,
                      "show_day": day,
                      "show_date": date,
                      "show_month": month,
+                     //"movie_main_image"  :movie_image,
+                     //"movie_banner_image"  :banner_image,
+                     //"movie_title" : movie_name,
+                     //"language" : language,
+                     //"format" : format,
+                     //"genre" : genre,
+                    // "certificate"  :certificate,
+                    // "description"  :description,
                    }
                    user_booking.push(booking_data)
 
@@ -571,18 +627,668 @@ hr {
 
            })
          });
-
+         
+         
     });
+         
+	    
+array.forEach((theatre_list) => {
+
+	    	
+	    	function formatTime(timeString) {
+	    	    let hours = parseInt(timeString.split(':')[0]);
+	    	    let minutes = timeString.split(':')[1];
+	    	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+	    	    if (hours > 12) {
+	    	        hours -= 12;
+	    	    }
+
+	    	    return hours + ':' + minutes + ' ' + period;
+	    	}
+
+	    	let formattedTime = formatTime(theatre_list.show_time);
+
+	    	
+	     
+	    	
+	    	function formatDate(dateString) {
+	    	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+	    	    const date = new Date(dateString);
+	    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+	    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+	    	    return {
+	    	        dayOfWeek,
+	    	        month: monthAndDay.slice(0, 3),
+	    	        day: parseInt(monthAndDay.slice(4))
+	    	        };
+	    	    }
+	    	           let formattedInfo = formatDate(theatre_list.show_date);
+	    	           
+	    	           
+	    	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+	    	           const month = formattedInfo.month
+	    	           const date = formattedInfo.day
+	    	           
+
+         const theatre_show2 = document.querySelector(".theatre_show2");
+
+
+           if (movie_id == theatre_list.movie_id && date == date_div[1].innerText && month == month_div[1].innerText) {
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show2.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time2");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+
+             
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times2");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+
+           }
+
+           const showtime2 = document.querySelectorAll(".show_time2 p");
+           const theatre_dev2 = document.querySelectorAll(".theatre_det");
+
+           showtime2.forEach((e) => {
+             e.addEventListener("click", (el) => {
+            	 
+             
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+
+});
+
+
+
+array.forEach((theatre_list) => {
+
+	
+	function formatTime(timeString) {
+	    let hours = parseInt(timeString.split(':')[0]);
+	    let minutes = timeString.split(':')[1];
+	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+	    if (hours > 12) {
+	        hours -= 12;
+	    }
+
+	    return hours + ':' + minutes + ' ' + period;
+	}
+
+	let formattedTime = formatTime(theatre_list.show_time);
+
+	
+	function formatDate(dateString) {
+	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+	    const date = new Date(dateString);
+	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+	    return {
+	        dayOfWeek,
+	        month: monthAndDay.slice(0, 3),
+	        day: parseInt(monthAndDay.slice(4))
+	        };
+	    }
+	           let formattedInfo = formatDate(theatre_list.show_date);
+	           
+	           
+	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+	           const month = formattedInfo.month
+	           const date = formattedInfo.day
+
+	    
+
+      
+
+         const theatre_show3 = document.querySelector(".theatre_show3");
+
+           if (movie_id == theatre_list.movie_id && date == date_div[2].innerText && month == month_div[2].innerText) {
+
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show3.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time3");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times3");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+
+           }
+           const showtime3 = document.querySelectorAll(".show_time3 p");
+           const theatre_dev3 = document.querySelectorAll(".theatre_det");
+
+           showtime3.forEach((e) => {
+             e.addEventListener("click", (el) => {
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+
+});
+
 
     
+           
+           array.forEach((theatre_list) => {
+
+   	    	
+   	    	function formatTime(timeString) {
+   	    	    let hours = parseInt(timeString.split(':')[0]);
+   	    	    let minutes = timeString.split(':')[1];
+   	    	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+   	    	    if (hours > 12) {
+   	    	        hours -= 12;
+   	    	    }
+
+   	    	    return hours + ':' + minutes + ' ' + period;
+   	    	}
+
+   	    	let formattedTime = formatTime(theatre_list.show_time);
+
+   	    	function formatDate(dateString) {
+    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+    const date = new Date(dateString);
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+    return {
+        dayOfWeek,
+        month: monthAndDay.slice(0, 3),
+        day: parseInt(monthAndDay.slice(4))
+        };
     }
-    // const day1_shows = document.getElementById("day1_shows");
-    // const day2_shows = document.getElementById("day2_shows");
-     //const day3_shows = document.getElementById("day3_shows");
-    // const day4_shows = document.getElementById("day4_shows");
-     //const day5_shows = document.getElementById("day5_shows");
-    // const day6_shows = document.getElementById("day6_shows");
-    // const day7_shows = document.getElementById("day7_shows");
+           let formattedInfo = formatDate(theatre_list.show_date);
+           
+           
+           const week = formattedInfo.dayOfWeek.slice(0,3); 
+           const month = formattedInfo.month
+           const date = formattedInfo.day
+
+
+
+         
+
+         const theatre_show4 = document.querySelector(".theatre_show4");
+
+           if (movie_id == theatre_list.movie_id && date == date_div[3].innerText && month == month_div[3].innerText) {
+
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show4.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time4");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+
+             
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times4");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+
+           }
+
+           const showtime4 = document.querySelectorAll(".show_time4 p")
+           const theatre_dev4 = document.querySelectorAll(".theatre_det");
+
+           showtime4.forEach((e) => {
+             e.addEventListener("click", (el) => {
+               // console.log(el.target.children[0].children[0].innerText + el.target.children[0].children[1].innerText + el.target.children[0].children[2].innerText);
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                	 
+                 
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+
+           });
+ 
+           array.forEach((theatre_list) => {
+
+   	    	
+   	    	function formatTime(timeString) {
+   	    	    let hours = parseInt(timeString.split(':')[0]);
+   	    	    let minutes = timeString.split(':')[1];
+   	    	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+   	    	    if (hours > 12) {
+   	    	        hours -= 12;
+   	    	    }
+
+   	    	    return hours + ':' + minutes + ' ' + period;
+   	    	}
+
+   	    	let formattedTime = formatTime(theatre_list.show_time);
+
+   	    	
+   	     
+   	    	function formatDate(dateString) {
+   	    	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+   	    	    const date = new Date(dateString);
+   	    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+   	    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+   	    	    return {
+   	    	        dayOfWeek,
+   	    	        month: monthAndDay.slice(0, 3),
+   	    	        day: parseInt(monthAndDay.slice(4))
+   	    	        };
+   	    	    }
+   	    	           let formattedInfo = formatDate(theatre_list.show_date);
+   	    	           
+   	    	           
+   	    	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+   	    	           const month = formattedInfo.month
+   	    	           const date = formattedInfo.day
+
+
+         
+
+         const theatre_show5 = document.querySelector(".theatre_show5");
+
+           if (movie_id == theatre_list.movie_id && date == date_div[4].innerText && month == month_div[4].innerText) {
+
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show5.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time5");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+
+             
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times5");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+           }
+
+           const showtime5 = document.querySelectorAll(".show_time5 p")
+           const theatre_dev5 = document.querySelectorAll(".theatre_det");
+
+           showtime5.forEach((e) => {
+             e.addEventListener("click", (el) => {
+               // console.log(el.target.children[0].children[0].innerText + el.target.children[0].children[1].innerText + el.target.children[0].children[2].innerText);
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+           });
+
+           
+           
+           array.forEach((theatre_list) => {
+
+   	    	
+   	    	function formatTime(timeString) {
+   	    	    let hours = parseInt(timeString.split(':')[0]);
+   	    	    let minutes = timeString.split(':')[1];
+   	    	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+   	    	    if (hours > 12) {
+   	    	        hours -= 12;
+   	    	    }
+
+   	    	    return hours + ':' + minutes + ' ' + period;
+   	    	}
+
+   	    	let formattedTime = formatTime(theatre_list.show_time);
+
+   	    	function formatDate(dateString) {
+   	    	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+   	    	    const date = new Date(dateString);
+   	    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+   	    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+   	    	    return {
+   	    	        dayOfWeek,
+   	    	        month: monthAndDay.slice(0, 3),
+   	    	        day: parseInt(monthAndDay.slice(4))
+   	    	        };
+   	    	    }
+   	    	           let formattedInfo = formatDate(theatre_list.show_date);
+   	    	           
+   	    	           
+   	    	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+   	    	           const month = formattedInfo.month
+   	    	           const date = formattedInfo.day
+         
+
+         const theatre_show6 = document.querySelector(".theatre_show6");
+
+           if (movie_id == theatre_list.movie_id && date == date_div[5].innerText && month == month_div[5].innerText) {
+
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show6.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time6");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+             
+             
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times6");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+           }
+
+           const showtime6 = document.querySelectorAll(".show_time6 p")
+           const theatre_dev6 = document.querySelectorAll(".theatre_det");
+
+           showtime6.forEach((e) => {
+             e.addEventListener("click", (el) => {
+               // console.log(el.target.children[0].children[0].innerText + el.target.children[0].children[1].innerText + el.target.children[0].children[2].innerText);
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+
+           });
+     
+           
+           array.forEach((theatre_list) => {
+
+   	    	
+   	    	function formatTime(timeString) {
+   	    	    let hours = parseInt(timeString.split(':')[0]);
+   	    	    let minutes = timeString.split(':')[1];
+   	    	    let period = (hours >= 12) ? 'PM' : 'AM';
+
+   	    	    if (hours > 12) {
+   	    	        hours -= 12;
+   	    	    }
+
+   	    	    return hours + ':' + minutes + ' ' + period;
+   	    	}
+
+   	    	let formattedTime = formatTime(theatre_list.show_time);
+
+   	    	
+   	     
+   	    	function formatDate(dateString) {
+   	    	    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+   	    	    const date = new Date(dateString);
+   	    	    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+   	    	    const [dayOfWeek, monthAndDay] = formattedDate.split(', ');
+
+   	    	    return {
+   	    	        dayOfWeek,
+   	    	        month: monthAndDay.slice(0, 3),
+   	    	        day: parseInt(monthAndDay.slice(4))
+   	    	        };
+   	    	    }
+   	    	           let formattedInfo = formatDate(theatre_list.show_date);
+   	    	           
+   	    	           
+   	    	           const week = formattedInfo.dayOfWeek.slice(0,3); 
+   	    	           const month = formattedInfo.month
+   	    	           const date = formattedInfo.day
+   	    	           
+   	    	           
+
+         const theatre_show7 = document.querySelector(".theatre_show7");
+
+           if (movie_id == theatre_list.movie_id && date == date_div[6].innerText && month == month_div[6].innerText) {
+
+             const theatre_det = document.createElement("div");
+             theatre_det.setAttribute("class", "theatre_det")
+             theatre_show7.append(theatre_det);
+
+             const title = document.createElement("h2");
+             title.setAttribute("class", "theatre_name")
+             title.innerText = theatre_list.theater_name;
+             theatre_det.append(title);
+
+             const showtime = document.createElement("div");
+             showtime.setAttribute("class", "show_time7");
+             showtime.setAttribute("id", "theatre_showtime")
+             theatre_det.append(showtime);
+
+             const a = document.createElement("a");
+             a.innerText =formattedTime;
+             a.setAttribute("class", "show_times7");
+             a.setAttribute("href", "movie_seats.jsp?movie_id="+movie_id);
+             showtime.append(a);
+
+             
+             const hr = document.createElement("hr");
+             theatre_det.append(hr);
+
+           }
+           const showtime7 = document.querySelectorAll(".show_time7 p")
+           const theatre_dev7 = document.querySelectorAll(".theatre_det");
+
+           showtime7.forEach((e) => {
+             e.addEventListener("click", (el) => {
+               // console.log(el.target.children[0].children[0].innerText + el.target.children[0].children[1].innerText + el.target.children[0].children[2].innerText);
+               const show_time = el.target.innerText;
+               const theatre_name = el.target.parentElement.parentElement.parentElement.children[0].innerText;
+
+               const user_booking = JSON.parse(localStorage.getItem("user_booking")) ?? []
+               if (JSON.parse(localStorage.getItem("user_booking"))) {
+                 user_booking.find(e => {
+                   if (e.email == e.email) {
+                     e.theatre_name = theatre_name
+                     e.show_time = show_time
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                   else {
+                     const booking_data = {
+                       "email": curUserEmail,
+                       "show_day": day,
+                       "show_date": date,
+                       "show_month": month,
+                     }
+                     user_booking.push(booking_data)
+
+                     users.push(booking_data)
+                     localStorage.setItem("user_booking", JSON.stringify(user_booking))
+                   }
+                 })
+               }
+
+             })
+           });
+
+         
+         });
+
+
+
+    
+
+    
+    };
 
     const show_day1 = document.querySelectorAll(".sunday_show");
 
@@ -609,20 +1315,13 @@ hr {
 
     
     show_day1.forEach((e) => {
+    	
+    
       e.addEventListener("click", (el) => {
-        // day1_shows.style.display = "block";
-        // day2_shows.style.display = "none";
-        // day3_shows.style.display = "none";
-        // day4_shows.style.display = "none";
-        // day5_shows.style.display = "none";
-        // day6_shows.style.display = "none";
-        // day7_shows.style.display = "none";
-        // console.log(el.target.children[0].children[2].innerText)
-
+        
         const users = JSON.parse(localStorage.getItem("profile_details"));
 
-        console.log(el.target.children[0].children[0].innerText);
-        //const day = el.target.children[0].children[0].innerText;
+        const day = el.target.children[0].children[0].innerText;
         const date = el.target.children[0].children[2].innerText;
         const month = el.target.children[0].children[4].innerText;
 
@@ -630,12 +1329,11 @@ hr {
 
         if (JSON.parse(localStorage.getItem("user_booking"))) {
           user_booking.find((e) => {
-            if (e.curUserEmail == curUserEmail) {
-              e.curUserEmail= curUserEmail
+            if (e.email == e.email) {
+              e.email= curUserEmail
               e.show_day = day
               e.show_date = date
               e.show_month = month
-              // user_booking.push(booking_date)
 
               localStorage.setItem("user_booking", JSON.stringify(user_booking))
             }
@@ -656,7 +1354,7 @@ hr {
         else {
 
           const booking_date = {
-            "email": users.email,
+            "email": curUserEmail,
             "show_day": day,
             "show_date": date,
             "show_month": month,

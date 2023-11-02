@@ -38,7 +38,7 @@ public class MovieServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		 
 		    try {
-		        List<Movie> movieList =  MovieService.readMovies();
+		         List<Movie> movieList =  MovieService.readMovies();
 		         request.setAttribute("movieList", movieList);
 		         
 		        }
@@ -54,9 +54,6 @@ public class MovieServlet extends HttpServlet {
 		    }
 		   
 		}
-
-	
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

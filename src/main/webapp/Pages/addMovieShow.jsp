@@ -12,7 +12,7 @@
 
     <div class="container">
         <h1>Add Show</h1>
-        <form action="/AddMovieShowServlet" method="post">
+        <form action="<%=request.getContextPath() %>/AddMovieShowServlet" method="post">
             <div class="form-group">
                 <label for="movieId">Movie ID:</label>
                 <input type="number" class="form-control" id="movieId" name="movieId" required>

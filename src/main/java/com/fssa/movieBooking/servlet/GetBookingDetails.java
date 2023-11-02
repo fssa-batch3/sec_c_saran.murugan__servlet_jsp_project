@@ -2,9 +2,10 @@ package com.fssa.movieBooking.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
+import com.fssa.movie.service.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,47 +15,39 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 import com.fssa.movie.daoException.DAOExceptions;
-import com.fssa.movie.model.MovieShow;
+import com.fssa.movie.model.Booking;
 import com.fssa.movie.service.MovieShowService;
 
 /**
- * Servlet implementation class ShowDetailsServlet
+ * Servlet implementation class GetBookingDetails
  */
-@WebServlet("/ShowDetailsServlet")
-public class ShowDetailsServlet extends HttpServlet {
+@WebServlet("/GetBookingDetails")
+public class GetBookingDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowDetailsServlet() {
+    public GetBookingDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	PrintWriter out=response.getWriter();
-    			MovieShowService sd = new MovieShowService();
+    			BookingService details = new BookingService();
     			try {
-    				List<Map<String, String>> showList = sd.getMovieShowDetails();
+    				List<Booking> showList = details.getBookingDetails();
     				JSONArray showDetailsList = new JSONArray(showList);
     				out.write(showDetailsList.toString());
-    			} catch (DAOExceptions e) {
-    				e.printStackTrace();
-    			}
+    				
+    			} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			
     		}
 
 
-    		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    			doGet(request, response);
-    		}
-
-    	}
-
-
-
-
-
-
-
+}
